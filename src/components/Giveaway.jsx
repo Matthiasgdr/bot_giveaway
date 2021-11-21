@@ -32,8 +32,8 @@ const Body = () => {
                 if ((spaceX < 200 && spaceX > -200) && (spaceY < 120 && spaceY > -120)) {
                     let multiplicateurX = ((200 - Math.abs(spaceX)) * 4) / 200
                     let multiplicateurY = ((120 - Math.abs(spaceY)) * 7) / 120
-                    p.x = p.x - (spaceX * multiplicateurX + 20)
-                    p.y = p.y - (spaceY * multiplicateurY + 20)
+                    p.x = p.x - (spaceX * multiplicateurX)
+                    p.y = p.y - (spaceY * multiplicateurY)
                 }
             } else {
                 p.win = 'win'
