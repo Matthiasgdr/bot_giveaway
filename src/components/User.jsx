@@ -10,7 +10,7 @@ const User = ({ user }) => {
 }
 
 const getColor = {
-    none: '#2e2e2e',
+    none: 'white',
     win: 'green',
     lose: 'red'
 }
