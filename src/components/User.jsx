@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const User = ({ user }) => {
     return (
-        <SUser $x={user.x} $y={user.y} $win={user.win} >
+        <SUser className={`user ${user.win}`} $x={user.x} $y={user.y} $win={user.win} >
             {user.username}
         </SUser>
     )
@@ -18,9 +18,11 @@ const getColor = {
 const SUser = styled.div.attrs(p => ({
     style: {
         transform: `translate(${p.$x}px, ${p.$y}px)`,
-        color: getColor[p.$win]
+        color: getColor[p.$win],
+        fontSize: p.$win === 'win' ? '52px' : '20px'
     }
 }))`
+    font-family: 'Readex Pro', sans-serif;
     position: absolute;
     width: 4px;
     height: 4px;
@@ -32,6 +34,7 @@ const SUser = styled.div.attrs(p => ({
     font-size: 24px;
     will-change: transform;
     transition: transform cubic-bezier(0.1, 0.82, 0.46, 1) 0.5s;
+    text-shadow: 0 0 20px black, 0 0 20px black,  0 0 20px black;
 `
 
 export default User

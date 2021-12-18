@@ -19,6 +19,9 @@ export const MESSAGE = gql`
                 }
             }
             time
+            ... on TwitchChatCommand {
+                command
+            }
         }
     }
 `;

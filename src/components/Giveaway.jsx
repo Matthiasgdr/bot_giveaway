@@ -5,13 +5,13 @@ import { v4 as id } from 'uuid'
 import { cloneDeep } from 'lodash'
 import { useParams } from 'react-router'
 
-
 import { MESSAGE } from '../services/subscription'
 
 import User from './User'
 
 const Body = () => {
     const [users, setUsers] = useState([])
+    const [started, setStarted] = useState(false)
     const containerRef = useRef()
     const { channel } = useParams()
 
@@ -22,7 +22,7 @@ const Body = () => {
     })
 
     const pick = () => {
-        const winner = users[Math.round(Math.random()*users.length)]
+        const winner = users[Math.floor(Math.random()*users.length)]
         const proxy = cloneDeep(users)
         proxy.forEach(p => {
             if (p?.id !== winner.id) {
@@ -42,18 +42,41 @@ const Body = () => {
         setUsers(proxy)
     }
 
+    const start = () => {
+        setStarted(true)
+    }
+
+    const stop = () => {
+        setStarted(false)
+    }
+
+    const reset = () => {
+        setUsers([])
+    }
+
     useEffect(() => {
         const message = data?.message
-        if (message) {
-            if (message.author.username === 'Bardolino' && message.message === 'pick') {
-                pick()
+        if (message?.command === 'start' && (message.author.roles.includes('BROADCASTER') || message.author.roles.includes('MODERATOR'))) {
+            start()
+        }
+        if (message?.command === 'pick' && (message.author.roles.includes('BROADCASTER') || message.author.roles.includes('MODERATOR'))) {
+            pick()
+        }
+        if (message?.command === 'reset' && (message.author.roles.includes('BROADCASTER') || message.author.roles.includes('MODERATOR'))) {
+            reset()
+        }
+        if (message && started) {
+            if (message.command === 'stop' && (message.author.roles.includes('BROADCASTER') || message.author.roles.includes('MODERATOR'))) {
+                stop()
             }
-            setUsers(prev => [...prev, {
-                id: id(), username: message.author.username,
-                x: Math.round(Math.random()*(containerRef.current.clientWidth - 50)),
-                y: Math.round(Math.random()*(containerRef.current.clientHeight - 50)),
-                win: 'none'
-            }])
+            if (message.command === 'giveaway' /* && !users.find(u => u !== message.author.username)*/) {
+                setUsers(prev => [...prev, {
+                    id: id(), username: message.author.username,
+                    x: Math.round(Math.random()*(containerRef.current.clientWidth - 50)),
+                    y: Math.round(Math.random()*(containerRef.current.clientHeight - 50)),
+                    win: 'none'
+                }])
+            }
         }
     }, [data?.message])
 
@@ -61,7 +84,6 @@ const Body = () => {
     return (
         <BodyContainer >
             <div className='user-wrapper' ref={containerRef}>
-                <button className='button' onClick={pick}>pick</button>
                 {users.map(user => <User key={user.id} user={user} />)}
             </div>
         </BodyContainer>
