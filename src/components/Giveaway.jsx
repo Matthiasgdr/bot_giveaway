@@ -56,6 +56,7 @@ const Body = () => {
 
     useEffect(() => {
         const message = data?.message
+        console.log("LOG ~ file: Giveaway.jsx ~ line 59 ~ useEffect ~ message", message)
         if (message?.command === 'start' && (message.author.roles.includes('BROADCASTER') || message.author.roles.includes('MODERATOR'))) {
             start()
         }
