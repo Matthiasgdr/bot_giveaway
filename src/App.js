@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import AppWrapper from './components/AppWrapper';
-import Giveaway from './components/Giveaway';
-import Welcome from './components/Welcome';
+import Giveaway from './pages/Giveaway';
+import Welcome from './pages/Welcome';
 
 const App = () => {
     return (
