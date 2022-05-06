@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import AppWrapper from './components/AppWrapper';
 import Giveaway from './pages/Giveaway';
+import GameList from './pages/GameList';
 import Welcome from './pages/Welcome';
 
 const App = () => {
@@ -11,7 +12,11 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Welcome />}></Route>
-                    <Route path="/:channel" element={<Giveaway />}></Route>
+                    <Route path="/:channel" element={<GameList />}></Route>
+                    <Route
+                        path="/:channel/giveaway"
+                        element={<Giveaway />}
+                    ></Route>
                 </Routes>
             </BrowserRouter>
         </AppWrapper>

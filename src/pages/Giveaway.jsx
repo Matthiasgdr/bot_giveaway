@@ -7,9 +7,8 @@ import useChat from '../hooks/useChat';
 
 import User from '../components/Giveaway/User';
 
-const Body = () => {
+const Giveaway = () => {
     const [users, setUsers] = useState([]);
-    console.log('LOG ~ file: Giveaway.jsx ~ line 12 ~ Body ~ users', users);
     const [started, setStarted] = useState(false);
     const containerRef = useRef();
 
@@ -79,8 +78,8 @@ const Body = () => {
         }
         if (message && started) {
             if (
-                message.command ===
-                'giveaway' /* && !users.find(u => u !== message.author.username)*/
+                message.command === 'giveaway' &&
+                !users.find(u => u !== message.author.username)
             ) {
                 setUsers(prev => [
                     ...prev,
@@ -131,4 +130,4 @@ const BodyContainer = styled.div`
     }
 `;
 
-export default Body;
+export default Giveaway;
